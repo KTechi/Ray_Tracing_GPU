@@ -55,10 +55,11 @@ function submit(event) {
                 document.getElementById('log-container').style.visibility = 'visible'
             break
         case 'save':
-            let str = 'This is a default file.\n'
-            str += 'Customize for your self.'
-            const file = new File([str], token[1] === undefined ? 'download' : token[1], { type: 'text/plain' })
-            download(file)
+            const a = document.createElement('a')
+            a.href = canvas.toDataURL('image/png')
+            a.download = (token.length == 1 ? 'download' : token[1]) + '.png'
+            a.click()
+            break
         default:
             console.log(token)
     }

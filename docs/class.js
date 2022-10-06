@@ -3,147 +3,105 @@
 
 'use strict'
 
-class ComplexNumber {
-    constructor(...args) {
-        if (args.length === 1) {
-            // Real Number
-            this.r = Math.abs(args[0])
-            this.theta = 0 <= args[0] ? 0 : Math.PI
-        } else if (args.length === 2) {
-            // Complex Number
-            this.r = args[0]
-            this.theta = args[1]
-        } else {
-            throw '[Argument number: ERROR]'
-        }
-    }
+// Complex Number
+function new_ComplexNumber(real) {
+    const r = Math.abs(real)
+    const theta = 0 < real ? 0 : Math.PI
+    return [r, theta]
+}
+function new_ComplexNumber2(r, theta) {
+    const r_ = Math.abs(r)
+    const theta_ = 0 < r ? theta : theta + Math.PI
+    return [r, theta]
+}
+function Re(cn) {
+    const cos = Math.cos(cn[1])
+    return Math.abs(cos) < 1e-10 ? 0 : cn[0] * cos
+}
+function Im(cn) {
+    const sin = Math.sin(cn[1])
+    return Math.abs(sin) < 1e-10 ? 0 : cn[0] * sin
+}
+function t(cn1, cn2) {
+    let cos1 = Math.cos(cn1[1])
+    let cos2 = Math.cos(cn2[1])
+    let sin1 = Math.sin(cn1[1])
+    let sin2 = Math.sin(cn2[1])
+    if (Math.abs(cos1) < 1e-2) cos1 = 0
+    if (Math.abs(cos2) < 1e-2) cos2 = 0
+    if (Math.abs(sin1) < 1e-2) sin1 = 0
+    if (Math.abs(sin2) < 1e-2) sin2 = 0
+    let R = cn1[0]*cos1 + cn2[0]*cos2
+    let I = cn1[0]*sin1 + cn2[0]*sin2
 
-    R() {
-        const r = this.r * Math.cos(this.theta)
-        return Math.abs(r) < 0.0000000001 ? 0 : r
-    }
-
-    I() {
-        const i = this.r * Math.sin(this.theta)
-        return Math.abs(i) < 0.0000000001 ? 0 : i
-    }
-
-    t(num) {
-        const R = this.R() + num.R()
-        const I = this.I() + num.I()
-        const r = Math.sqrt(R**2 + I**2)
-        const theta = Math.atan2(I, R)
-        return new ComplexNumber(r, theta)
-    }
-
-    x(num) {
-        return new ComplexNumber(this.r * num.r, this.theta + num.theta)
-    }
-
-    pow(n) {
-        return new ComplexNumber(Math.pow(this.r, n), n * this.theta)
-    }
-
-    print() {
-        console.log(this.R() + ' + ' + this.I() + 'i')
-    }
+    if (Math.abs(R) < 1e-2) R = 0
+    if (Math.abs(I) < 1e-2) I = 0
+    const r = Math.sqrt(R**2 + I**2)
+    // const theta = Math.atan2(I, R)
+    // let theta = 0
+    // if (R < 0) theta += Math.PI
+    // theta += Math.atan2(I, R)
+    let theta = Math.atan(I / R)
+    let a = I
+    let b = R
+    if (0 < b) theta = Math.atan(a / b)
+    else if (b <  0 && a >= 0) theta = Math.atan(a/b) + Math.PI
+    else if (b <  0 && a <  0) theta = Math.atan(a/b) - Math.PI
+    else if (b == 0 && 0 <  a) theta =  Math.PI / 2
+    else if (b == 0 && a <  0) theta = -Math.PI / 2
+    else if (b == 0 && a == 0) theta = 0
+    return [r, theta]
+}
+function x(cn1, cn2) {
+    const r = cn1[0] * cn2[0]
+    const theta = cn1[1] + cn2[1]
+    return [r, theta]
+}
+function pow_(cn, n) {
+    const r = Math.pow(cn[0], n)
+    const theta = n * cn[1]
+    return [r, theta]
 }
 
-class Quaternion {
-    constructor(...args) {
-        if (args.length === 1) {
-            // Vector
-            this.w = 0
-            this.x = args[0].x
-            this.y = args[0].y
-            this.z = args[0].z
-        } else if (args.length === 2) {
-            // Angle, Axis
-            this.w = Math.cos(args[0] / 2)
-            this.x = Math.sin(args[0] / 2) * args[1].x
-            this.y = Math.sin(args[0] / 2) * args[1].y
-            this.z = Math.sin(args[0] / 2) * args[1].z
-        } else if (args.length === 3) {
-            // x, y, z
-            this.w = 0
-            this.x = args[0]
-            this.y = args[1]
-            this.z = args[2]
-        } else if (args.length === 4) {
-            // w, x, y, z
-            this.w = args[0]
-            this.x = args[1]
-            this.y = args[2]
-            this.z = args[3]
-        } else {
-            throw '[Argument number: ERROR]'
-        }
-    }
-
-    clone() {
-        return new Quaternion(this.w, this.x, this.y, this.z)
-    }
-
-    conjugate() {
-        return new Quaternion(this.w, -this.x, -this.y, -this.z)
-    }
-
-    toVector() {
-        return new Vector(this.x, this.y, this.z)
-    }
+// Quaternion
+function new_Quaternion(angle, axis) {
+    return [Math.cos(angle / 2),
+            Math.sin(angle / 2) * axis[0],
+            Math.sin(angle / 2) * axis[1],
+            Math.sin(angle / 2) * axis[2]]
+}
+function qConjugate(q) {
+    return [q[0], -q[1], -q[2], -q[3]]
+}
+function qMultiply(p, q) {
+    return [p[0]*q[0] - p[1]*q[1] - p[2]*q[2] - p[3]*q[3],
+            p[0]*q[1] + p[1]*q[0] + p[2]*q[3] - p[3]*q[2],
+            p[0]*q[2] - p[1]*q[3] + p[2]*q[0] + p[3]*q[1],
+            p[0]*q[3] + p[1]*q[2] - p[2]*q[1] + p[3]*q[0]]
+}
+function qRotation(v, q) {
+    const p_ = [   0, v[0], v[1], v[2]] // Target Quaternion
+    const q_ = [q[0], q[1], q[2], q[3]]
+    const qc = [q[0],-q[1],-q[2],-q[3]]
+    return qMultiply(qMultiply(q_, p_), qc)
 }
 
-class Vertex {
-    constructor(x, y, z) {
-        this.x = x
-        this.y = y
-        this.z = z
-    }
-
-    clone() {
-        return new Vertex(this.x, this.y, this.z)
-    }
-
-    toVector() {
-        return new Vector(this.x, this.y, this.z)
-    }
+// Vector
+function new_Vector(from, to) {
+    return [to[0] - from[0],
+            to[1] - from[1],
+            to[2] - from[2]]
 }
-
-class Edge {
-    constructor(u, v) {
-        this.u = u
-        this.v = v
-    }
-
-    clone() {
-        return new Edge(this.u.clone(), this.v.clone())
-    }
+function norm(v) {
+    return Math.sqrt(v[0]**2 + v[1]**2 + v[2]**2)
 }
-
-class Vector {
-    constructor(x, y, z) {
-        this.x = x
-        this.y = y
-        this.z = z
-    }
-
-    clone() {
-        return new Vector(this.x, this.y, this.z)
-    }
-
-    norm() {
-        return Math.sqrt(this.x**2 + this.y**2 + this.z**2)
-    }
-
-    scale(s) {
-        this.x *= s
-        this.y *= s
-        this.z *= s
-    }
-
-    normalize() {
-        this.scale(1 / this.norm())
-    }
+function normalize(v) {
+    const s = 1 / Math.sqrt(v[0]**2 + v[1]**2 + v[2]**2)
+    return [s*v[0], s*v[1], s*v[2]]
+}
+function q2v(q) {
+    // Quaternion -> Vector
+    return [q[1], q[2], q[3]]
 }
 
 // ================================================== [50]
