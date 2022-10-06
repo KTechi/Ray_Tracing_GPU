@@ -24,17 +24,11 @@ function mousewheel(event) {
     // Disable scroll event
     event.preventDefault()
     
-    // yaw   = (yaw   - 0.01 * event.deltaX) % (2*Math.PI)
-    // pitch = (pitch - 0.01 * event.deltaY)
-    // if (pitch < -Math.PI / 2) pitch = -Math.PI / 2
-    // if ( Math.PI / 2 < pitch) pitch =  Math.PI / 2
-
-    const q_x = new_Quaternion(-.005 * event.deltaX, [0, 0, 1])
-    const q_y = new_Quaternion(-.005 * event.deltaY, [1, 0, 0])
-    const q = qMultiply(q_y, q_x)
-    g_q = qMultiply(q, g_q)
-    torus[1] = g_q
-
+    yaw   = (yaw   - 0.01 * event.deltaX) % (2*Math.PI)
+    pitch = (pitch - 0.01 * event.deltaY)
+    if (pitch < -Math.PI / 2) pitch = -Math.PI / 2
+    if ( Math.PI / 2 < pitch) pitch =  Math.PI / 2
+    
     paint()
 }
 
@@ -42,7 +36,7 @@ function mousewheel(event) {
 //     Mouse Event
 
 //canvas.addEventListener('click'    , click    , false)
-canvas.addEventListener('dblclick' , dblclick , false)
+//canvas.addEventListener('dblclick' , dblclick , false)
 //canvas.addEventListener('mousedown', mousedown, false)
 //canvas.addEventListener('mouseup'  , mouseup  , false)
 function click(event) {
@@ -72,19 +66,14 @@ function contextMenu(event) {}
 
 // ====
 
-canvas.addEventListener('mousemove', mousemove, false)
+//canvas.addEventListener('mousemove', mousemove, false)
 function mousemove(event) {
     if (document.pointerLockElement === canvas) {
-        const q_x = new_Quaternion(-.002 * event.movementX, [0, 0, 1])
-        const q_y = new_Quaternion(-.002 * event.movementY, crossProduct(screen, [0, 0, 1]))
-        const q = qMultiply(q_y, q_x)
-        screen = q2v(qRotation(screen, q))
-        screen = normalize(screen)
-        paint()
+        console.log(event.movementX, event.movementY)
     }
     
     if (event.buttons === 1) {
-        // console.log('drag')
+        console.log('drag')
     }
 }
 

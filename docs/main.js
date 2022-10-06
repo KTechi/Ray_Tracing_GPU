@@ -5,27 +5,13 @@
 
 function paint() {
     // Quaternion
-    const q_p = new_Quaternion(pitch, [1, 0, 0])
-    const q_r = new_Quaternion(roll , [0, 1, 0])
-    const q_y = new_Quaternion(yaw  , [0, 0, 1])
+    const q_p = new Quaternion(pitch, new Vector(1, 0, 0))
+    const q_r = new Quaternion(roll , new Vector(0, 1, 0))
+    const q_y = new Quaternion(yaw  , new Vector(0, 0, 1))
     const q = qMultiply(qMultiply(q_r, q_p), q_y)
 
-    const screen_pos = world(camera, 500, screen)
-    const upVector = [0, 0, 1]
-    let screenX = crossProduct(screen, upVector)
-    let screenY = crossProduct(screen, screenX)
-    screenX = normalize(screenX)
-    screenY = normalize(screenY)
-    for (let i = 0; i < 3; i++) {
-        screenX[i] /= scale
-        screenY[i] /= scale
-    }
-    const north_west = world2V(screen_pos, -VW/2, screenX, -VH/2, screenY)
-
     // GPU
-    run(north_west, screenX, screenY, camera, light,
-        torus[0], torus[1], torus[2], torus[3],
-        pic[0], pic[1], pic[2])
+    run([q.w, q.x, q.y, q.z])
 }
 
 // ================================================== [50]
