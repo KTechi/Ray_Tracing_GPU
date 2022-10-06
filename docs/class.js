@@ -38,9 +38,6 @@ function t(cn1, cn2) {
     if (Math.abs(I) < 1e-2) I = 0
     const r = Math.sqrt(R**2 + I**2)
     // const theta = Math.atan2(I, R)
-    // let theta = 0
-    // if (R < 0) theta += Math.PI
-    // theta += Math.atan2(I, R)
     let theta = Math.atan(I / R)
     let a = I
     let b = R
@@ -95,7 +92,7 @@ function new_Vector(from, to) {
 function norm(v) {
     return Math.sqrt(v[0]**2 + v[1]**2 + v[2]**2)
 }
-function normalize(v) {
+function normalize_(v) {
     const s = 1 / Math.sqrt(v[0]**2 + v[1]**2 + v[2]**2)
     return [s*v[0], s*v[1], s*v[2]]
 }

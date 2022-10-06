@@ -20,7 +20,7 @@ function initGPU() {
 // Vector
 .addFunction(new_Vector,   { argumentTypes: { fomr: 'Array(3)', to: 'Array(3)' }, returnType: 'Array(3)' })
 .addFunction(norm,         { argumentTypes: { v: 'Array(3)' }, returnType: 'Number' })
-.addFunction(normalize,    { argumentTypes: { v: 'Array(3)' }, returnType: 'Array(3)' })
+.addFunction(normalize_,    { argumentTypes: { v: 'Array(3)' }, returnType: 'Array(3)' })
 .addFunction(q2v,          { argumentTypes: { q: 'Array(4)' }, returnType: 'Array(3)' })
 .addFunction(innerProduct, { argumentTypes: { u: 'Array(3)', v: 'Array(3)' }, returnType: 'Number' })
 .addFunction(crossProduct, { argumentTypes: { u: 'Array(3)', v: 'Array(3)' }, returnType: 'Array(3)' })

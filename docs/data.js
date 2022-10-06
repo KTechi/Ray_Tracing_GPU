@@ -17,7 +17,7 @@ let g_q = [1, 0, 0, 0] // Global Quaternion
 
 let camera = [-400, -400, 200]
 let screen = [4, 4, -2]
-screen = normalize(screen)
+screen = normalize_(screen)
 let light = [0, 0, 1000000]
 
 const torus = [

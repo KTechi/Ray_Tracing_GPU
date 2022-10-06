@@ -56,7 +56,7 @@ function submit(event) {
             break
         case 'save':
             const a = document.createElement('a')
-            a.href = canvas.toDataURL('image/png')
+            a.href = gpu.canvas.toDataURL('image/png')
             a.download = (token.length == 1 ? 'download' : token[1]) + '.png'
             a.click()
             break

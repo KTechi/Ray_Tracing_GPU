@@ -14,8 +14,8 @@ function paint() {
     const upVector = [0, 0, 1]
     let screenX = crossProduct(screen, upVector)
     let screenY = crossProduct(screen, screenX)
-    screenX = normalize(screenX)
-    screenY = normalize(screenY)
+    screenX = normalize_(screenX)
+    screenY = normalize_(screenY)
     for (let i = 0; i < 3; i++) {
         screenX[i] /= scale
         screenY[i] /= scale
