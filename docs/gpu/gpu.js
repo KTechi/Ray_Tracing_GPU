@@ -20,7 +20,7 @@ function initGPU() {
 // Vector
 .addFunction(new_Vector,   { argumentTypes: { fomr: 'Array(3)', to: 'Array(3)' }, returnType: 'Array(3)' })
 .addFunction(norm,         { argumentTypes: { v: 'Array(3)' }, returnType: 'Number' })
-.addFunction(normalize_,    { argumentTypes: { v: 'Array(3)' }, returnType: 'Array(3)' })
+.addFunction(normalize_,   { argumentTypes: { v: 'Array(3)' }, returnType: 'Array(3)' })
 .addFunction(q2v,          { argumentTypes: { q: 'Array(4)' }, returnType: 'Array(3)' })
 .addFunction(innerProduct, { argumentTypes: { u: 'Array(3)', v: 'Array(3)' }, returnType: 'Number' })
 .addFunction(crossProduct, { argumentTypes: { u: 'Array(3)', v: 'Array(3)' }, returnType: 'Array(3)' })
@@ -28,7 +28,8 @@ function initGPU() {
 .addFunction(world,        { argumentTypes: { offset: 'Array(3)', a: 'Number', u: 'Array(3)' }, returnType: 'Array(3)' })
 .addFunction(world2V,      { argumentTypes: { offset: 'Array(3)', a: 'Number', u: 'Array(3)', b: 'Number', v: 'Array(3)' }, returnType: 'Array(3)' })
 // Math
-.addFunction(atan2_, { argumentTypes: { a: 'Number', b: 'Number'                           }, returnType: 'Number' })
+.addFunction(atan2_, { argumentTypes: { a: 'Number', b: 'Number' }, returnType: 'Number' })
+.addFunction(ipow_ , { argumentTypes: { x: 'Number', a: 'Number' }, returnType: 'Number' })
 .addFunction(sce,    { argumentTypes: { a: 'Number', b: 'Number', c: 'Number'              }, returnType: 'Array(2)' })
 .addFunction(sqe,    { argumentTypes: { a: 'Number', b: 'Number', c: 'Number', d: 'Number' }, returnType: 'Number' })
 // Colision Point
@@ -107,15 +108,10 @@ function getColisionPointTorus(cam, ray, light, material, R, r) {
                   c3**2 - c6)
 
     if (t < 0) return [0, 0, 0, -1]
-    // return [1, 0, .5, 1]
 
     const v = world(cam, t, ray)
     let l = new_Vector(v, light)
-    // const angle = Math.atan2(v[1], v[0]) + (v[0] < 0 ? Math.PI : 0)
     const angle = atan2_(v[1], v[0])
-
-    // if (R < 0) theta += Math.PI
-    // theta += Math.atan2(I, R)
 
     let n = [v[0] - R*Math.cos(angle),
              v[1] - R*Math.sin(angle),

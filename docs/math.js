@@ -38,13 +38,18 @@ function atan2_(a, b) {
     else if (b == 0 && a == 0) return 0
     return 0
 }
+function ipow_(x, a) {
+    const abs_x = Math.abs(x)
+    const y = Math.pow(abs_x, a)
+    return x < 0 ? -y : y
+}
 
 // Solve Cubic Equation
 // x^3 + ax^2 + bx + c = 0
 function sce(a, b, c) {
     const p = -(a**2)/3 + b
-    const q = 2*a**3/27 - a*b/3 + c
-    const r = q**2/4 + p**3/27
+    const q = 2*ipow_(a, 3)/27 - a*b/3 + c
+    const r = q**2/4 + ipow_(p, 3)/27
     let A = [0, 0]
     let B = [0, 0]
     if (r < 0) {
@@ -67,7 +72,7 @@ function sce(a, b, c) {
 // x^4 + ax^3 + bx^2 + cx + d = 0
 function sqe(a, b, c, d) {
     const p = -3*a**2/8 + b
-    const q = a**3/8 - a*b/2 + c
+    const q = ipow_(a, 3)/8 - a*b/2 + c
     const r = -3*a**4/256 + a**2*b/16 - a*c/4 + d
     const lambda = sce(-p/2, -r, p*r/2 - q**2/8)
     const neg_1 = new_ComplexNumber(-1)
