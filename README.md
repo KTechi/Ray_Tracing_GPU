@@ -1,6 +1,7 @@
 # Ray_Tracing_GPU
 
-Here is the [link](https://ktechi.github.io/Ray_Tracing_GPU/).
+Here is the [link](https://ktechi.github.io/Ray_Tracing_GPU/).\
+___Double click___ to lock cursor.
 
 ## Sample
 <img src="image/1.png" style="width:20rem;"/>
