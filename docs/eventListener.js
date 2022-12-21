@@ -79,7 +79,7 @@ function mousemove(event) {
         const q_y = new_Quaternion(-.002 * event.movementY, crossProduct(screen, [0, 0, 1]))
         const q = qMultiply(q_y, q_x)
         screen = q2v(qRotation(screen, q))
-        screen = normalize(screen)
+        screen = normalize_(screen)
         paint()
     }
     
