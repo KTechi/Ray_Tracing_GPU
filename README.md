@@ -3,6 +3,9 @@
 Here is the [link](https://ktechi.github.io/Ray_Tracing_GPU/).\
 ___Double click___ to lock cursor.
 
+using
+https://github.com/gpujs/gpu.js
+
 ## Sample
 <img src="image/1.png" style="width:20rem;"/>
 <!-- <img src="image/2.png" style="width:20rem;"/> -->
