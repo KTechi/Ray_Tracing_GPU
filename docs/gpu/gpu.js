@@ -78,7 +78,20 @@ function kernel(NW, sX, sY, cm, lt,
     ray = normalize(ray)
     let colPoint2 = getColisionPointPIC  (cam, ray, lt_, p_m)
 
-    if (colPoint[3] < 0 || (0 < colPoint2[3] && colPoint2[3] < colPoint[3])) colPoint = colPoint2
+    if (colPoint[3] < 0 || (0 < colPoint2[3] && colPoint2[3] < colPoint[3])) {
+        colPoint = colPoint2
+
+        let new_cam = world(camera, colPoint2[3], ray)
+        cam = q2v(qRotation(world(new_cam, -1, t_o)   , qConjugate(t_q)))
+        ray = q2v(qRotation(new_Vector(new_cam, light), qConjugate(t_q)))
+        lt_ = q2v(qRotation(world(light , -1, t_o)    , qConjugate(t_q)))
+        ray = normalize(ray)
+        if (0 < getColisionPointTorus(cam, ray, lt_, t_m, t_R, t_r)[3]) {
+            colPoint[0] *= .5
+            colPoint[1] *= .5
+            colPoint[2] *= .5
+        }
+    }
 
     let r = 0
     let g = 0
