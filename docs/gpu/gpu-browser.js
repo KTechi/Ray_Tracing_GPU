@@ -18024,11 +18024,11 @@ module.exports = {
 };
 },{}],107:[function(require,module,exports){
 const lib = require('./index');
-const GPU = lib.GPU;
+const GPUX = lib.GPUX;
 for (const p in lib) {
   if (!lib.hasOwnProperty(p)) continue;
-  if (p === 'GPU') continue; 
-  GPU[p] = lib[p];
+  if (p === 'GPUX') continue; 
+  GPUX[p] = lib[p];
 }
 
 if (typeof window !== 'undefined') {
@@ -18039,10 +18039,10 @@ if (typeof self !== 'undefined') {
 }
 
 function bindTo(target) {
-  if (target.GPU) return;
-  Object.defineProperty(target, 'GPU', {
+  if (target.GPUX) return;
+  Object.defineProperty(target, 'GPUX', {
     get() {
-      return GPU;
+      return GPUX;
     }
   });
 }
@@ -18071,7 +18071,7 @@ const internalKernels = {
 
 let validate = true;
 
-class GPU {
+class GPUX {
   static disableValidation() {
     validate = false;
   }
@@ -18500,12 +18500,12 @@ function upgradeDeprecatedCreateKernelSettings(settings) {
 }
 
 module.exports = {
-  GPU,
+  GPUX,
   kernelOrder,
   kernelTypes
 };
 },{"./backend/cpu/kernel":8,"./backend/headless-gl/kernel":34,"./backend/kernel":36,"./backend/web-gl/kernel":70,"./backend/web-gl2/kernel":105,"./kernel-run-shortcut":111,"./utils":114,"gpu-mock.js":4}],109:[function(require,module,exports){
-const { GPU } = require('./gpu');
+const { GPUX } = require('./gpu');
 const { alias } = require('./alias');
 const { utils } = require('./utils');
 const { Input, input } = require('./input');
@@ -18537,7 +18537,7 @@ module.exports = {
   alias,
   CPUFunctionNode,
   CPUKernel,
-  GPU,
+  GPUX,
   FunctionBuilder,
   FunctionNode,
   HeadlessGLKernel,

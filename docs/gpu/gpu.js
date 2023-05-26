@@ -4,7 +4,7 @@
 'use strict'
 
 function initGPU() {
-    gpu = new GPU({ canvas, webGl: gl})
+    gpu = new GPUX({ canvas, webGl: gl})
 // Complex Number
 .addFunction(new_ComplexNumber , { argumentTypes: { real: 'Number'               }, returnType: 'Array(2)' })
 .addFunction(new_ComplexNumber2, { argumentTypes: { r: 'Number', theta: 'Number' }, returnType: 'Array(2)' })
