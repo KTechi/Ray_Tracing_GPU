@@ -4,7 +4,7 @@
 'use strict'
 
 const canvas = document.createElement('canvas')
-const gl = canvas.getContext('webgl2')
+const gl = canvas.getContext('webgl2', { preserveDrawingBuffer: true })
 let gpu
 let run
 let scale = 1.0
