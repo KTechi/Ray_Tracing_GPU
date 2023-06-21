@@ -39,9 +39,8 @@ function atan2_(a, b) {
     return 0
 }
 function ipow_(x, a) {
-    const abs_x = Math.abs(x)
-    const y = Math.pow(abs_x, a)
-    return x < 0 ? -y : y
+    const y = Math.pow(Math.abs(x), a)
+    return 0 < x ? y : -y
 }
 
 // Solve Cubic Equation
